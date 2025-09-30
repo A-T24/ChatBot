@@ -1,3 +1,14 @@
+import os
+import nltk
+
+# Ensure NLTK data is downloaded and accessible on Render
+nltk_data_path = '/opt/render/nltk_data'
+if not os.path.exists(nltk_data_path):
+    os.makedirs(nltk_data_path)
+
+nltk.data.path.append(nltk_data_path)
+nltk.download('punkt', download_dir=nltk_data_path)
+
 import pandas as pd
 import nltk
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -130,3 +141,4 @@ def update_output(n_clicks, user_input):
 # Run the app
 if __name__ == '__main__':
     app.run(debug=True)
+
