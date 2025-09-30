@@ -114,7 +114,7 @@ Open an issue or submit a pull request.
 ---
 
 ## 📄 License
-MIT License © 2025 **Your Name**
+MIT License © 2025 **Ayush**
 
 ---
 
@@ -123,5 +123,5 @@ MIT License © 2025 **Your Name**
 - Tokenization with [NLTK](https://www.nltk.org/)  
 - Inspired by interactive AI chatbots and educational projects  
 
-> Made with ❤️ by **Your Name**
+> Made with ❤️ by **Ayush**
 
