@@ -1,3 +1,4 @@
+import os
 import pandas as pd
 import nltk
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -7,44 +8,43 @@ from sklearn.model_selection import train_test_split
 import dash
 from dash import dcc, html
 from dash.dependencies import Input, Output
-import random
 
-import os
-
-
-
-
-# Load the dataset
-data = pd.read_csv("chatbot_dataset.csv")
-# Set a directory for NLTK data that Render can write to
+# --------------------------
+# NLTK Setup for Render
+# --------------------------
 nltk_data_dir = os.path.join(os.path.dirname(__file__), "nltk_data")
 os.makedirs(nltk_data_dir, exist_ok=True)
 
-# Download punkt to this directory
+# Download necessary NLTK packages
 nltk.download('punkt', download_dir=nltk_data_dir)
+nltk.download('punkt_tab', download_dir=nltk_data_dir)  # Fix for newer NLTK versions
 
-# Tell NLTK to look here
+# Add directory to NLTK search path
 nltk.data.path.append(nltk_data_dir)
-# Preprocess the data
-nltk.download('punkt')   #punkt tokenizer
-data['Question'] = data['Question'].apply(lambda x: ' '.join(nltk.word_tokenize(x.lower()))) #Normalized data 
 
-# Split the data into training and test sets
+# --------------------------
+# Load dataset
+# --------------------------
+data = pd.read_csv("chatbot_dataset.csv")
+data['Question'] = data['Question'].apply(lambda x: ' '.join(nltk.word_tokenize(str(x).lower())))
+
+# --------------------------
+# Train model
+# --------------------------
 X_train, X_test, y_train, y_test = train_test_split(data['Question'], data['Answer'], test_size=0.2, random_state=42)
-
-# Create a model pipeline
 model = make_pipeline(TfidfVectorizer(), MultinomialNB())
 model.fit(X_train, y_train)
 
 def get_response(question):
-    question = ' '.join(nltk.word_tokenize(question.lower()))
-    answer = model.predict([question])[0]
-    return answer
+    question = ' '.join(nltk.word_tokenize(str(question).lower()))
+    return model.predict([question])[0]
 
-# Initialize the Dash app
+# --------------------------
+# Dash App
+# --------------------------
 app = dash.Dash(__name__)
+chat_history = []
 
-# Define the layout
 app.layout = html.Div([
     html.H1("💬 My ChatterBox", style={
         'textAlign': 'center',
@@ -53,20 +53,16 @@ app.layout = html.Div([
         'padding': '15px',
         'borderRadius': '10px'
     }),
-
-    # Chat window
     html.Div(id='chat-window', style={
         'border': '2px solid #2980b9',
         'borderRadius': '15px',
         'padding': '15px',
         'height': '400px',
         'overflowY': 'scroll',
-        'backgroundColor': '#f0f8ff',  # light blue background
+        'backgroundColor': '#f0f8ff',
         'marginBottom': '15px',
         'boxShadow': '0px 4px 8px rgba(0,0,0,0.2)'
     }),
-
-    # Input area
     html.Div([
         dcc.Input(
             id='user-input',
@@ -96,12 +92,10 @@ app.layout = html.Div([
     'maxWidth': '700px',
     'margin': 'auto',
     'fontFamily': 'Arial, sans-serif',
-    'backgroundColor': "#8974D8", # Main dark background
+    'backgroundColor': "#8974D8",
     'minHeight': '100vh',
-    'padding': '20px'})
-
-
-chat_history = []
+    'padding': '20px'
+})
 
 @app.callback(
     Output('chat-window', 'children'),
@@ -112,7 +106,7 @@ def update_output(n_clicks, user_input):
     if n_clicks > 0 and user_input:
         response = get_response(user_input)
 
-        # User bubble (green, aligned right)
+        # User bubble
         chat_history.append(html.Div(user_input, style={
             'textAlign': 'right',
             'margin': '10px',
@@ -124,7 +118,7 @@ def update_output(n_clicks, user_input):
             'maxWidth': '70%'
         }))
 
-        # Bot bubble (blue, aligned left)
+        # Bot bubble
         chat_history.append(html.Div(response, style={
             'textAlign': 'left',
             'margin': '10px',
@@ -138,15 +132,9 @@ def update_output(n_clicks, user_input):
 
     return chat_history
 
-
-# Run the app
-import os
-
+# --------------------------
+# Run server
+# --------------------------
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 8050))
     app.run(host='0.0.0.0', port=port)
-
-
-
-
-
