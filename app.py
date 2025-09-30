@@ -9,10 +9,22 @@ from dash import dcc, html
 from dash.dependencies import Input, Output
 import random
 
+import os
+
+
+
 
 # Load the dataset
 data = pd.read_csv("chatbot_dataset.csv")
+# Set a directory for NLTK data that Render can write to
+nltk_data_dir = os.path.join(os.path.dirname(__file__), "nltk_data")
+os.makedirs(nltk_data_dir, exist_ok=True)
 
+# Download punkt to this directory
+nltk.download('punkt', download_dir=nltk_data_dir)
+
+# Tell NLTK to look here
+nltk.data.path.append(nltk_data_dir)
 # Preprocess the data
 nltk.download('punkt')   #punkt tokenizer
 data['Question'] = data['Question'].apply(lambda x: ' '.join(nltk.word_tokenize(x.lower()))) #Normalized data 
@@ -133,6 +145,7 @@ import os
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 8050))
     app.run(host='0.0.0.0', port=port)
+
 
 
 
