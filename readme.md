@@ -85,7 +85,7 @@ my-chatterbox/
 ```bash
 python dark_mode_chatbot.py
 ```
-Open [http://127.0.0.1:8050/]([http://127.0.0.1:8050/](https://my-chatterbox.onrender.com)) in your browser to start chatting.
+Open [https://my-chatterbox.onrender.com](https://my-chatterbox.onrender.com) in your browser to start chatting.
 
 ---
 
