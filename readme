@@ -1,1 +1,49 @@
-Chatbot
+# 💬 My ChatterBox: Data Science & ML Chatbot
+
+[![Python](https://img.shields.io/badge/Python-3.11-blue?logo=python&logoColor=white)](https://www.python.org/)
+[![Dash](https://img.shields.io/badge/Dash-2.13-blue?logo=plotly&logoColor=white)](https://dash.plotly.com/)
+[![License](https://img.shields.io/badge/License-MIT-green)](LICENSE)
+
+---
+
+## 🚀 Project Overview
+
+**My ChatterBox** is a sleek, web-based chatbot that answers questions about **Data Science**, **Machine Learning**, and related tools like Python, Pandas, SQL, and algorithms.  
+
+It leverages **Multinomial Naive Bayes** with **TF-IDF vectorization** to intelligently map user queries to structured answers from a **custom knowledge base**.
+
+✨ **Key Idea:** Train the bot on a dataset of Q&A pairs to provide instant responses in a visually appealing chat interface.
+
+---
+
+## 🛠 Features
+
+- 📝 **Custom Knowledge Base:** Trainable dataset (`chatbot_dataset.csv`) with FAQs on Data Science & ML.  
+- 🧠 **NLP Backend:** Uses `nltk` for tokenization and `TfidfVectorizer` for feature extraction.  
+- 🌙 **Dark Mode UI:** Modern, responsive interface built using Dash.  
+- 💬 **Interactive Chat:** Real-time message display with styled chat bubbles and auto-clearing input.  
+- ⚡ **Lightweight & Extendable:** Easily add new Q&A pairs to expand the bot’s intelligence.
+
+---
+
+## 🏗 Technology Stack
+
+| Component            | Technology      | Role                                                      |
+|----------------------|----------------|-----------------------------------------------------------|
+| Backend/Core Logic    | Python         | Handles ML model training and data preprocessing.       |
+| Web Framework         | Dash           | Provides the interactive web application interface.     |
+| Machine Learning      | scikit-learn   | Implements Multinomial Naive Bayes classifier.           |
+| NLP Preprocessing     | NLTK           | Tokenization & text normalization.                        |
+| Data Storage          | Pandas         | Loads and manages the chatbot dataset.                   |
+
+---
+
+## ⚡ Setup & Installation
+
+### Prerequisites
+- Python 3.7+ installed on your system
+
+### 1️⃣ Clone the Repository
+```bash
+git clone <repository_url>
+cd my-chatterbox
