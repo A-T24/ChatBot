@@ -33,10 +33,8 @@ It uses **Multinomial Naive Bayes** with **TF-IDF vectorization** to map user qu
 *Example of user asking a question and bot responding.*
 
 ### Dark Mode & Chat Styling
-![Dark Mode Screenshot](https://via.placeholder.com/600x300.png?text=Chatbot+Dark+Mode+Screenshot)  
 *Clean UI with scrollable chat bubbles.*
 
-> 💡 Tip: Replace the above placeholder image/GIF with your actual screenshots or GIFs.
 
 ---
 
