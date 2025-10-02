@@ -12,7 +12,7 @@ from dash.dependencies import Input, Output
 # --------------------------
 # NLTK Setup for Render
 # --------------------------
-nltk_data_dir = os.path.join(os.path.dirname(_file_), "nltk_data")
+nltk_data_dir = os.path.join(os.path.dirname(__file__), "nltk_data")
 os.makedirs(nltk_data_dir, exist_ok=True)
 
 # Download necessary NLTK packages
@@ -144,4 +144,5 @@ def update_output(n_clicks, user_input):
 # Run the app
 if _name_ == '_main_':
     port = int(os.environ.get('PORT', 8050))
+
     app.run(host='0.0.0.0', port=port)
