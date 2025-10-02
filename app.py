@@ -48,7 +48,7 @@ def get_response(question):
 # --------------------------
 # Dash App
 # --------------------------
-app = dash.Dash(_name_)
+app = dash.Dash(__name__)
 chat_history = []
 
 app.layout = html.Div([
@@ -146,3 +146,4 @@ if _name_ == '_main_':
     port = int(os.environ.get('PORT', 8050))
 
     app.run(host='0.0.0.0', port=port)
+
