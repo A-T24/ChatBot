@@ -12,13 +12,12 @@ from dash.dependencies import Input, Output
 # --------------------------
 # NLTK Setup for Render
 # --------------------------
-nltk_data_dir = os.path.join(os.path.dirname(__file__), "nltk_data")
+nltk_data_dir = os.path.join(os.path.dirname(_file_), "nltk_data")
 os.makedirs(nltk_data_dir, exist_ok=True)
 
 # Download necessary NLTK packages
-nltk.download('punkt', download_dir=nltk_data_dir)
+nltk.download('punkt',download_dir=nltk_data_dir )
 nltk.download('punkt_tab', download_dir=nltk_data_dir)  # Fix for newer NLTK versions
-
 # Add directory to NLTK search path
 nltk.data.path.append(nltk_data_dir)
 
@@ -26,23 +25,30 @@ nltk.data.path.append(nltk_data_dir)
 # Load dataset
 # --------------------------
 data = pd.read_csv("chatbot_dataset.csv")
-data['Question'] = data['Question'].apply(lambda x: ' '.join(nltk.word_tokenize(str(x).lower())))
+# Preprocess: lowercase + tokenize + remove extra spaces
+data['Question'] = data['Question'].apply(lambda x: ' '.join(nltk.word_tokenize(str(x).lower())).strip())
 
 # --------------------------
 # Train model
 # --------------------------
-X_train, X_test, y_train, y_test = train_test_split(data['Question'], data['Answer'], test_size=0.2, random_state=42)
-model = make_pipeline(TfidfVectorizer(), MultinomialNB())
+X_train, X_test, y_train, y_test = train_test_split(
+    data['Question'], data['Answer'], test_size=0.2, random_state=42
+)
+model = make_pipeline(TfidfVectorizer(ngram_range=(1, 2), min_df=2), MultinomialNB())
 model.fit(X_train, y_train)
 
 def get_response(question):
-    question = ' '.join(nltk.word_tokenize(str(question).lower()))
-    return model.predict([question])[0]
+    question = ' '.join(nltk.word_tokenize(str(question).lower())).strip()
+    try:
+        pred = model.predict([question])[0]
+        return pred
+    except:
+        return "Sorry, I couldn't understand that."
 
 # --------------------------
 # Dash App
 # --------------------------
-app = dash.Dash(__name__)
+app = dash.Dash(_name_)
 chat_history = []
 
 app.layout = html.Div([
@@ -135,6 +141,7 @@ def update_output(n_clicks, user_input):
 # --------------------------
 # Run server
 # --------------------------
-if __name__ == '__main__':
+# Run the app
+if _name_ == '_main_':
     port = int(os.environ.get('PORT', 8050))
     app.run(host='0.0.0.0', port=port)
