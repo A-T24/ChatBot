@@ -1,125 +1,176 @@
-# 💬 My ChatterBox: Data Science & ML Chatbot
+# 💬 ChatBot
 
-[![Python](https://img.shields.io/badge/Python-3.11-blue?logo=python&logoColor=white)](https://www.python.org/)
-[![Dash](https://img.shields.io/badge/Dash-2.13-blue?logo=plotly&logoColor=white)](https://dash.plotly.com/)
-[![License](https://img.shields.io/badge/License-MIT-green)](LICENSE)
-
----
-
-## 🚀 Project Overview
-
-**My ChatterBox** is a sleek, web-based chatbot built with **Python**, **Dash**, and **machine learning**. It answers questions about **Data Science**, **Machine Learning**, and related tools like Python, Pandas, SQL, and algorithms.  
-
-It uses **Multinomial Naive Bayes** with **TF-IDF vectorization** to map user queries to structured answers from a **custom knowledge base**.
-
-✨ **Key Idea:** Train the bot on a dataset of Q&A pairs to provide instant responses in a visually appealing chat interface.
+A simple **AI-powered chatbot** built using **Python**, **NLTK**, and **Dash** for a responsive web interface.  
+It uses a CSV-based Q&A dataset and text similarity techniques to provide intelligent replies to user queries.
 
 ---
 
-## 🛠 Features
+## 🚀 Features
 
-- 📝 **Custom Knowledge Base** – Trainable dataset (`chatbot_dataset.csv`) with FAQs.  
-- 🧠 **NLP Backend** – Uses `nltk` for tokenization and `TfidfVectorizer` for feature extraction.  
-- 🌙 **Dark Mode UI** – Modern, responsive interface built with Dash.  
-- 💬 **Interactive Chat** – Real-time messages with styled chat bubbles.  
-- ⚡ **Lightweight & Extendable** – Easily add new Q&A pairs to expand intelligence.
+- 🧠 **Natural Language Processing** (NLTK + TF-IDF similarity)
+- 🌗 **Dark Mode UI** for a modern chatting experience
+- 💾 **Customizable Dataset** — easily add your own questions and answers
+- ⚙️ **Lightweight Architecture** built on Python and Dash
+- 🧩 **Fully Local Execution** — no API keys or cloud services required
 
 ---
 
-## 🌈 UI Preview
+## 🗂️ Project Structure
 
-### Chat in Action
-![Chatbot GIF](https://media.giphy.com/media/l0HlNaQ6gWfllcjDO/giphy.gif)  
-*Example of user asking a question and bot responding.*
-
-### Dark Mode & Chat Styling
-*Clean UI with scrollable chat bubbles.*
+ChatBot/
+│
+├── app.py # Main Dash web app
+├── data/
+│ └── chatbot_dataset.csv # Question–Answer dataset
+├── requirements.txt # Dependencies
+├── static/ # (Optional) Static assets: CSS, JS, images
+├── templates/ # (Optional) HTML templates
+└── README.md
 
 
 ---
 
-## 🛠 Technology Stack
+## 🧩 Installation
 
-| Component            | Technology      | Role                                                      |
-|----------------------|----------------|-----------------------------------------------------------|
-| Backend/Core Logic    | Python         | ML model training and data preprocessing                 |
-| Web Framework         | Dash           | Builds the interactive web interface                     |
-| Machine Learning      | scikit-learn   | Multinomial Naive Bayes classifier                        |
-| NLP Preprocessing     | NLTK           | Tokenization & text normalization                         |
-| Data Storage          | Pandas         | Loads and manages the dataset                              |
+### 1. Clone the repository
 
----
+git clone https://github.com/A-T24/ChatBot.git
+cd ChatBot
 
-## ⚡ Setup & Installation
+2. (Optional) Create a virtual environment
 
-### Prerequisites
-- Python 3.7+ installed
+python -m venv venv
+# On Linux / macOS
+source venv/bin/activate
+# On Windows
+venv\Scripts\activate
 
-### 1️⃣ Clone the Repository
-```bash
-git clone <repository_url>
-cd my-chatterbox
-```
+3. Install dependencies
 
-### 2️⃣ Install Dependencies
-```bash
-pip install pandas scikit-learn dash nltk
-```
+pip install -r requirements.txt
 
-### 3️⃣ Download NLTK Data
-```python
-import nltk
-nltk.download('punkt')
-```
+    💡 If NLTK raises missing resource errors:
 
-### 4️⃣ Project Structure
-```
-my-chatterbox/
-├── dark_mode_chatbot.py       # Main application script
-├── chatbot_dataset.csv        # Q&A dataset
-├── README.md                  # Project documentation
-└── requirements.txt           # Python dependencies
-```
+    import nltk
+    nltk.download('punkt')
 
-### 5️⃣ Run the Application
-```bash
-python dark_mode_chatbot.py
-```
-Open [https://my-chatterbox.onrender.com](https://my-chatterbox.onrender.com) in your browser to start chatting.
+▶️ Usage
 
----
+Start the chatbot locally:
 
-## 📚 Training Data (`chatbot_dataset.csv`)
+python app.py
 
-| Question                   | Answer                                                                 |
-|-----------------------------|------------------------------------------------------------------------|
-| What is SQL?               | SQL (Structured Query Language) is used to manage data in relational databases. |
-| What does a Data Scientist do? | Designs and implements statistical models, analyzes data, and provides actionable insights. |
+Then open your browser and visit:
+👉 http://127.0.0.1:8050/
 
-> 💡 Tip: Add more question-answer pairs to improve performance.
+You can now chat with the bot in your browser.
+🧠 How It Works
 
----
+    The user sends a message through the Dash interface.
 
-## 🤝 Contributing
-Contributions are welcome! You can:
+    The chatbot tokenizes input using NLTK.
 
-- Add more Q&A pairs to the dataset  
-- Improve UI/UX design  
-- Suggest features or optimizations  
+    A TF-IDF vectorizer transforms text into a numerical representation.
 
-Open an issue or submit a pull request.
+    The app compares the input to known questions using cosine similarity.
 
----
+    The most similar question’s predefined answer is returned to the user.
 
-## 📄 License
-MIT License © 2025 **Ayush**
+🗃️ Dataset
 
----
+The chatbot reads data from:
 
-## ⭐ Acknowledgements
-- Built with [Dash](https://dash.plotly.com/) and [Scikit-learn](https://scikit-learn.org/)  
-- Tokenization with [NLTK](https://www.nltk.org/)  
-- Inspired by interactive AI chatbots and educational projects  
+data/chatbot_dataset.csv
 
-> Made with ❤️ by **Ayush**
+Each row follows this format:
+Question	Answer
+Hi	Hello! How can I help you today?
+Who are you?	I am a simple chatbot created in Python.
 
+You can easily add your own pairs — just edit the CSV and restart the app.
+Be sure to keep the same column names.
+🧪 Running Tests
+
+To verify chatbot behavior, you can use pytest:
+
+pytest tests/
+
+Example test (tests/test_basic_response.py):
+
+from app import get_response
+
+def test_greeting():
+    reply = get_response("hi")
+    assert "hello" in reply.lower()
+
+🛠️ Contributing
+
+Contributions are welcome! 🙌
+
+    Fork this repository
+
+    Create a new branch
+
+git checkout -b improve-readme
+
+Make your changes
+
+Push your branch
+
+    git push origin improve-readme
+
+    Open a Pull Request on GitHub
+
+💅 Code Style
+
+    Follow PEP 8
+
+    Use linters like flake8 or formatters like black
+
+    Add comments/docstrings where needed
+
+📦 Deployment
+Deploy on Render or Railway
+
+    Create a new Python web service
+
+    Upload this repo or connect your GitHub fork
+
+    Add the build command:
+
+pip install -r requirements.txt
+
+Run command:
+
+    python app.py
+
+Run with Docker
+
+docker build -t chatbot .
+docker run -p 8050:8050 chatbot
+
+🧾 Example Conversation
+
+You: Hi
+Bot: Hello! How can I help you today?
+
+You: What can you do?
+Bot: I can answer simple questions based on my dataset!
+
+🧱 Future Improvements
+
+    🤖 Add intent recognition for better understanding
+
+    🗣️ Include speech input/output support
+
+    🧮 Integrate transformer-based responses (e.g., DistilBERT)
+
+    🧱 Add database-backed learning system
+
+📄 License
+
+This project is licensed under the MIT License.
+See the LICENSE
+file for details.
+
+Made with ❤️ by Ayush
